@@ -17,7 +17,8 @@ function loadFromIotmUrl(url) {
             })
             const maybeNextLink = response.data.meta.pagination.links.next;
             if (maybeNextLink) {
-                return loadFromIotmUrl(maybeNextLink);
+                return loadFromIotmUrl(maybeNextLink)
+                    .then(nestedRetrieval => retrievedData.concat(nestedRetrieval));
             } else {
                 return retrievedData;
             }
