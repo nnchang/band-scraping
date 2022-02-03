@@ -13,7 +13,12 @@ function loadFromIotmUrl(url) {
             // see data type information at the bottom
             const retrievedData = [];
             response.data.data.forEach(bandOrVenue => {
-                retrievedData.push(_.pick(bandOrVenue, ['display_name', 'website', 'songkick', 'soundcloud', 'city', 'state', 'created_at', 'genres', 'bio']));
+                const trimmedData = _.pick(bandOrVenue, ['display_name', 'website', 'songkick', 'soundcloud', 'city', 'state', 'created_at', 'genres', 'bio']);
+                trimmedData.genres = trimmedData.genres.data.map(genreObj => genreObj.genre);
+                const hasWebsite = trimmedData.website && trimmedData.website.toLowerCase().indexOf("myspace.com") === -1;
+                if (hasWebsite || trimmedData.soundcloud || trimmedData.songkick) {
+                    retrievedData.push(trimmedData);
+                }
             })
             const maybeNextLink = response.data.meta.pagination.links.next;
             if (maybeNextLink) {
