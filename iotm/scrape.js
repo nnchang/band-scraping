@@ -1,6 +1,6 @@
 const button = document.querySelector("#start-button");
-const url = document.querySelector("#starting-url");
-url.addEventListener("change", e => button.disabled = e.target.value.length === 0);
+const urlInput = document.querySelector("#starting-url");
+urlInput.addEventListener("change", e => button.disabled = e.target.value.length === 0);
 
 /**
  * load the URL
@@ -28,7 +28,7 @@ button.addEventListener("click", e => {
     if (e.target.disabled) {
         return;
     }
-    loadFromIotmUrl(e.target.textContent).then(retrievedData => {
+    loadFromIotmUrl(urlInput.value).then(retrievedData => {
         const csvString = Papa.unparse(retrievedData);
         const element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvString));
