@@ -1,4 +1,4 @@
-<script src="/iotm/scrape.js"></script>
+<script src="iotm/scrape.js"></script>
 
 ## Scraping
 getting started with GH pages…
