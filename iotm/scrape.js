@@ -1,21 +1,29 @@
-const button = document.querySelector("#start-button");
-const urlInput = document.querySelector("#starting-url");
-urlInput.addEventListener("change", e => button.disabled = e.target.value.length === 0);
+const _ = require("lodash");
+const axios = require("axios");
+const fs = require("fs");
+const Papa = require('papaparse');
+
+const expectedPrefix = "https://www.indieonthemove.com/";
 
 /**
  * load the URL
  * re-run with '.meta.pagination.links.next', if it exists
 */
 function loadFromIotmUrl(url) {
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
+    if (!url.startsWith(expectedPrefix)) {
+        console.error("didn't know how to handle URL");
+        return Promise.reject("didn't know how to handle URL");
+    }
+    const apiUrl = url.slice(0, expectedPrefix.length) + 'api/' + url.slice(expectedPrefix.length);
+    return axios.get(apiUrl)
+        .then(response => {
             // see data type information at the bottom
             const retrievedData = [];
-            data.data.forEach(bandOrVenue => {
-                retrievedData.push(_.pick(bandOrVenue, ['display_name', 'website', 'city', 'state', 'songkick', 'soundcloud', 'created_at', 'genres', 'bio']));
+            console.log(response.data);
+            response.data.data.forEach(bandOrVenue => {
+                retrievedData.push(_.pick(bandOrVenue, ['display_name', 'website', 'songkick', 'soundcloud', 'city', 'state', 'created_at', 'genres', 'bio']));
             })
-            const maybeNextLink = data.meta.pagination.links.next;
+            const maybeNextLink = response.data.meta.pagination.links.next;
             if (maybeNextLink) {
                 return loadFromIotmUrl(maybeNextLink);
             } else {
@@ -24,23 +32,14 @@ function loadFromIotmUrl(url) {
         });
 }
 
-button.addEventListener("click", e => {
-    if (e.target.disabled) {
-        return;
-    }
-    loadFromIotmUrl(urlInput.value).then(retrievedData => {
-        const csvString = Papa.unparse(retrievedData);
-        const element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvString));
-        element.setAttribute('download', filename);
+if (process.argv.length < 3) {
+    console.error("didn't supply a URL");
+    return 1;
+}
 
-        element.style.display = 'none';
-        document.body.appendChild(element);
-
-        element.click();
-
-        document.body.removeChild(element);
-    });
+loadFromIotmUrl(process.argv[2]).then(retrievedData => {
+    const csvString = Papa.unparse(retrievedData);
+    return fs.promises.writeFile("output.csv", csvString);
 });
 
 /*
