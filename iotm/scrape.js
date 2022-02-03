@@ -19,6 +19,13 @@ const users = {"data":[{"uuid":"bb287e62-d840-4231-b55d-9676a7e6fdf1","username"
 */
 
 
+const button = document.querySelector("#start-button");
+document.querySelector("#starting-url").addEventListener("change", e => {
+    if (e.target.textContent.length > 0) {
+        button.setAttribute("disabled", undefined);
+    }
+});
+
 /*
 take a URL for an input
 load the URL
