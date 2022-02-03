@@ -20,7 +20,7 @@ async function step(chunkedLinks) {
     await Promise.all(chunk.map(async link => {
         const bandName = link.split('/')[4];
         const data = await axios.get(link, { headers: { accept: "text/html" } }).then(response => response.data);
-        fs.writeFileSync('data/' + bandName + '.html', data);
+        return fs.promises.writeFile('data/' + bandName + '.html', data);
     }).concat(new Promise(res => setTimeout(res, 1000))));
     return step(chunkedLinks.slice(1));
 }

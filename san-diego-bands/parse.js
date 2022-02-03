@@ -28,7 +28,7 @@ async function step(chunkedFiles) {
             data.push(`${bandName},${inception},${website}`);
         }
     }));
-    fs.writeFileSync(outFile, data.join('\n') + '\n');
+    await fs.promises.writeFile(outFile, data.join('\n') + '\n');
     return step(chunkedFiles.slice(1));
 }
 
