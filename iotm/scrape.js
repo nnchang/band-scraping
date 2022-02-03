@@ -1,6 +1,6 @@
 const button = document.querySelector("#start-button");
 const url = document.querySelector("#starting-url");
-url.addEventListener("change", e => button.disabled = e.target.textContent.length === 0);
+url.addEventListener("change", e => button.disabled = e.target.value.length === 0);
 
 /**
  * load the URL
