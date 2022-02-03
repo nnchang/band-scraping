@@ -7,7 +7,7 @@ url.addEventListener("change", e => button.disabled = e.target.value.length === 
  * re-run with '.meta.pagination.links.next', if it exists
 */
 function loadFromIotmUrl(url) {
-    return fetch(e.target.textContent)
+    return fetch(url)
         .then(response => response.json())
         .then(data => {
             // see data type information at the bottom
