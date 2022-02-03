@@ -15,6 +15,8 @@ function loadFromIotmUrl(url) {
             response.data.data.forEach(bandOrVenue => {
                 const trimmedData = _.pick(bandOrVenue, ['display_name', 'website', 'songkick', 'soundcloud', 'city', 'state', 'created_at', 'genres', 'bio']);
                 trimmedData.genres = trimmedData.genres.data.map(genreObj => genreObj.genre);
+                trimmedData.songkick = trimmedData.songkick ?? 'https://www.songkick.com/artists/' + trimmedData.songkick;
+                trimmedData.soundcloud = trimmedData.soundcloud ?? 'https://soundcloud.com/' + trimmedData.soundcloud;
                 const hasWebsite = trimmedData.website && trimmedData.website.toLowerCase().indexOf("myspace.com") === -1;
                 if (hasWebsite || trimmedData.soundcloud || trimmedData.songkick) {
                     retrievedData.push(trimmedData);
