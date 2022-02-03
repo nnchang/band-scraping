@@ -8,7 +8,7 @@ const Papa = require('papaparse');
  * re-run with '.meta.pagination.links.next', if it exists
 */
 function loadFromIotmUrl(url) {
-    return axios.get(apiUrl)
+    return axios.get(url)
         .then(response => {
             // see data type information at the bottom
             const retrievedData = [];
