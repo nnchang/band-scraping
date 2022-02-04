@@ -1,7 +1,4 @@
-## Scraping
-getting started with GH pages…
-
-### Open multiple URLs
+# Open multiple URLs
 Open many links at once, 10 at a time.
 <textarea
     id="urls-box"
