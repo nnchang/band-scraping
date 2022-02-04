@@ -6,6 +6,7 @@ openButton.addEventListener("click", e => {
     const linksArray = linksString.split('\n') 
         .filter(link => link);
     linksArray.slice(0, 10)
+        .reverse() // reverse the list because (at least in Firefox) the tabs wind up reversed
         .forEach(link => open(link, link));
     urlsBox.value = linksArray.slice(10).join('\n');
 });
