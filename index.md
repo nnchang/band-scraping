@@ -5,7 +5,7 @@ getting started with GH pages…
 Open many links at once, 10 at a time.
 <textarea
     id="urls-box"
-    placeholder="Add links here, one per line."
+    placeholder="Add links here, separated by newlines or tabs."
     rows="10"
     style="font-family: Arial; width: 100%; white-space: pre"
 ></textarea>

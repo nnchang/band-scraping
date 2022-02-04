@@ -3,7 +3,7 @@ const openButton = document.querySelector("#open-button");
 
 openButton.addEventListener("click", e => {
     const linksString = urlsBox.value;
-    const linksArray = linksString.split('\n') 
+    const linksArray = linksString.split(/[\n\t]/) 
         .filter(link => link);
     linksArray.slice(0, 10)
         .reverse() // reverse the list because (at least in Firefox) the tabs wind up reversed
