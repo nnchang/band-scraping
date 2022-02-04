@@ -1,10 +1,8 @@
 ## Scraping
 getting started with GH pages…
 
-### Indie on the Move scraping
-<input id="starting-url" style="margin: 20px 0; width: 80%" />
-<button id="start-button" disabled>Download as CSV</button>
+### Open multiple URLs
+<textarea id="urls-box" style="font-family:Arial; width: 80%; height: 12em; white-space: nowrap"></textarea>
+<button id="open-button">Open links</button>
 
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
-<script src="iotm/scrape.js"></script>
+<script src="index.js"></script>
